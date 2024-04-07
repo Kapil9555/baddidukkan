@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import QRCode from 'qrcode.react';
 import Header from '@/components/Header';
 import {QrReader} from 'react-qr-reader';
@@ -10,6 +10,7 @@ const QrReaderPage = () => {
     const [scannedData, setScannedData] = useState(null);
     const [scanning, setScanning] = useState(true);
     const [cameraAvailable, setCameraAvailable] = useState(false);
+    const [mode , setMode] = useState("user")
 
     
     const checkCameraPermission = async () => {
@@ -39,18 +40,19 @@ const QrReaderPage = () => {
       checkCameraPermission();
   }, []);
 
+  console.log("modes",mode)
 
     return (
       <>
       <Header />
       <Grid container justifyContent={'center'} alignItems={'center'} sx={{}}>
           <Grid item lg={6} md={4} sm={7} xs={11} sx={{ mt: "60px", height: "60vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <Box sx={{ height: "100%",  width: { lg: "400px", md: "200px", sm: "200px", xs: "200px" },height: { lg: "400px", md: "200px", sm: "200px", xs: "200px" } }}>
+              <Box sx={{ height: "100%",border:"1px solid red",  width: { lg: "400px", md: "200px", sm: "200px", xs: "200px" },height: { lg: "400px", md: "200px", sm: "200px", xs: "200px" } }}>
                   {cameraAvailable && scanning && (
                       <QrReader
                         onResult={handleScan}
                           onError={handleError}
-                          facingMode={'environment'}
+                          facingMode={mode}
                           style={{ width: '100%', height: '100%' }}
                       />
                   )}
@@ -70,6 +72,10 @@ const QrReaderPage = () => {
                   )}
               </Box>
           </Grid>
+          <Button variant='contained' onClick={()=>{setMode("user")}}>Rear</Button>
+          <Button variant='contained' onClick={()=>{setMode("environment")}}>env</Button>
+          <Button variant='contained' onClick={()=>{setMode("rear")}}>user</Button>
+
       </Grid>
       <Footer />
   </>
