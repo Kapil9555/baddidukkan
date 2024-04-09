@@ -19,19 +19,30 @@ import axios from 'axios';
 const ItemList = () => {
     const router = useRouter()
     const [mID, setMID]=useState("65bfcad6b33fd8b324f87b25")
-    const [categories , setCategories] = useState([])
-    const [catItems , setCatItems] = useState([])
+    const [allDetails , setAllDetails] = useState(null)
+    const [categories , setCategories] = useState(null)
+    const [catItems , setCatItems] = useState(null)
 
     const getItems = async()=>{
         try{
             const resp =  await axios.get(`${BASE_URL}api/pre-order/pro/${mID}`)
-            if(resp.data.message == "success"){
-                // console.log("response line no 24",resp.data.response.allCategories)
-                setCategories(resp.data.response.allCategories)
+            if (resp.data.message === "success") {
+                setAllDetails(resp?.data?.response)
+                setCategories(resp?.data?.response?.allCategories);
+                console.log("response line no 24", resp?.data?.response);
+            
+                const allItems = resp?.data?.response?.allCategories.flatMap(ele => ele.items || []);
+                setCatItems(allItems)
+                // console.log("response line no 33", allItems);
             }
         }catch(err){
             console.log("Error while fetching items",err)
         }
+    }
+
+    const handleSelectCatItems =(data)=>{
+        console.log("items..",data.items)
+        setCatItems(data.items)
     }
 
     useEffect(()=>{
@@ -45,12 +56,12 @@ const ItemList = () => {
                 <Grid item xs={12} sx={{}}>
                     <Paper sx={{ p: "20px" }}>
                         <Typography variant='h6' sx={{ textTransform: "capitalize", fontWeight: 600 }}>
-                            Baba Vishwanath
+                           {allDetails?.ownerName}
                         </Typography>
-                        <Typography sx={{ textTransform: "capitalize", fontSize: "14px" }}>Sweet Home</Typography>
-                        <Typography sx={{ textTransform: "capitalize", fontSize: "11px", textTransform: "uppercase", color: "gray" }}>84W+3dfd nagar,varanasi,uttar pradesh</Typography>
+                        <Typography sx={{ textTransform: "capitalize", fontSize: "14px" }}>{allDetails?.shopName}</Typography>
+                        <Typography sx={{ textTransform: "capitalize", fontSize: "11px", textTransform: "uppercase", color: "gray" }}>{allDetails?.address}</Typography>
                         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                            <Typography sx={{ textTransform: "capitalize", fontSize: "14px", display: "flex", alignItems: "center" }}><WatchLaterIcon sx={{ fontSize: "16px", mr: "3px" }} />15 min | 9313.54 km away</Typography>
+                            <Typography sx={{ textTransform: "capitalize", fontSize: "14px", display: "flex", alignItems: "center" }}><WatchLaterIcon sx={{ fontSize: "16px", mr: "3px" }} />{allDetails?.deliveryTime} | 9313.54 km away</Typography>
                             <Box>
                                 <IconButton sx={{ bgcolor: "#8bc34a", p: "3px", mr: "10px" }}>
                                     <WifiCalling3Icon sx={{ color: "white", fontSize: "15px" }} />
@@ -69,18 +80,24 @@ const ItemList = () => {
                             <Typography align='center' sx={{ display: "flex", alignItems: "center", fontSize: "14px" }}><MenuBookIcon sx={{ fontSize: "40px", color: "black", mr: "5px", mt: "-3px" }} /> Menu</Typography>
                         </Box>
                         <Box sx={{ display: "flex", overflow: "auto", mt: "20px" }}>
-                            {
-                                categories.map((ele, i) => (
-                                    <Box key={i} sx={{ display: "flex", mr: "15px", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                                        <Box sx={{ height: "50px", position: "relative", overflow: "hidden", width: "50px", borderRadius: "50px" }}>
-                                            <Image src={burger} alt='burger' style={{ height: "50px", position: "absolute", width: "auto" }} />
+                        {
+                            categories != null
+                            ?
+                                categories?.map((ele, i) => (
+                                    <Box key={i} sx={{ display: "flex", mr: "15px", flexDirection: "column", alignItems: "center", justifyContent: "center" }} onClick={()=>{handleSelectCatItems(ele)}}>
+                                        <Box sx={{ height: "50px",backgroundImage:`url(${BASE_URL+ele.catImage})`, overflow: "hidden", width: "50px", borderRadius: "50px" }}>
+                                            {/* <Image src={burger} alt='burger' style={{ height: "50px", position: "absolute", width: "auto" }} /> */}
                                         </Box>
                                         <Box sx={{ border: "1px solid #8bc34a", width: "fit-content", p: "3px 10px", mt: "5px", borderRadius: "25px" }}>
                                             <Typography sx={{ textTransform: "capitalize",whiteSpace:"nowrap", fontSize: "13px" }}>{ele.catName}</Typography>
                                         </Box>
                                     </Box>
                                 ))
-                            }
+                                :
+                                ""
+                        }
+                            
+                            
                         </Box>
                     </Paper>
                 </Grid>
@@ -90,19 +107,19 @@ const ItemList = () => {
                     </Paper>
                 </Grid>
                 {
-                    new Array(10).fill(1).map((ele, i) => (
+                    catItems?.map((ele, i) => (
                         <Grid item xs={12} key={i}>
                             <Paper sx={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #8bc34a", boxSizing: "border-box", width: "100%", p: "15px 30px 20px 10px" }}>
 
                                 <Box sx={{ display: "flex" }}>
-                                    <Box sx={{ height: "80px", position: "relative", width: "80px", borderRadius: "10px", overflow: "hidden" }}>
+                                    <Box sx={{ height: "80px",backgroundImage:`url(${BASE_URL}${ele.itemImage})`,backgroundRepeat:"no-repeat",backgroundSize:"100% 100%", position: "relative", width: "80px", borderRadius: "10px", overflow: "hidden" }}>
                                         <Box sx={{ position: "absolute", top: "0px", left: "0px", zIndex: 9, height: "17px", bgcolor: "#8bc34a", width: "60px" }}>
                                             <Typography align='center' sx={{ color: "white", fontSize: "10px", mt: "1px", fontWeight: 800 }}>33 %OFF</Typography>
                                         </Box>
-                                        <Image src={dhosa} alt='burger' style={{ position: "absolute", width: "100%", height: "100%" }} />
+                                        {/* <Image src={dhosa} alt='burger' style={{ position: "absolute", width: "100%", height: "100%" }} /> */}
                                     </Box>
                                     <Box sx={{ ml: "10px" }}>
-                                        <Typography sx={{ fontSize: "14px" }}>Dosa</Typography>
+                                        <Typography sx={{ fontSize: "14px" }}>{ele.itemName}</Typography>
                                         <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}>Category : Rasmalai</Typography>
                                         <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}><span style={{ color: "#8bc34a", marginRight: "10px" }}>₹20</span> ₹<span style={{ textDecoration: "line-through" }}>30</span></Typography>
                                     </Box>
@@ -110,7 +127,7 @@ const ItemList = () => {
 
                                 <Box sx={{ height: "80px", display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center", width: "fit-content" }}>
                                     <Box>
-                                        <StopCircleOutlinedIcon sx={{ color: "#8bc34a" }} />
+                                        <StopCircleOutlinedIcon sx={{ color:ele.foodType == "Veg" ? "#8bc34a":"#b71c1c" }} />
                                     </Box>
                                     <Box sx={{ border: "1px solid #8bc34a", display: "flex" }}>
                                         <Box sx={{ width: "22px", display: "flex", justifyContent: "center", alignItems: "center" }}>
