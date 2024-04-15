@@ -5,27 +5,25 @@ import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import WifiCalling3Icon from '@mui/icons-material/WifiCalling3';
 import PlaceIcon from '@mui/icons-material/Place';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import burger from "../../assests/burger.webp"
-import Image from 'next/image';
-import dhosa from '../../assests/DHOSA.jpeg'
 import StopCircleOutlinedIcon from '@mui/icons-material/StopCircleOutlined'
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { BASE_URL } from '@/constant';
 import axios from 'axios';
 
 const ItemList = () => {
     const router = useRouter()
-    const [mID, setMID]=useState("65bfcad6b33fd8b324f87b25")
+    const {mid} = useParams()
     const [allDetails , setAllDetails] = useState(null)
     const [categories , setCategories] = useState(null)
     const [catItems , setCatItems] = useState(null)
 
     const getItems = async()=>{
         try{
-            const resp =  await axios.get(`${BASE_URL}api/pre-order/pro/${mID}`)
+    console.log("categories",mid)
+            const resp =  await axios.get(`${BASE_URL}api/pre-order/pro/${mid}`)
             if (resp.data.message === "success") {
                 setAllDetails(resp?.data?.response)
                 setCategories(resp?.data?.response?.allCategories);
@@ -49,7 +47,7 @@ const ItemList = () => {
         getItems()
     },[])
 
-    console.log("categories",categories)
+    console.log("categories",mid)
     return (
         <Container disableGutters maxWidth={'xl'}>
             <Grid container sx={{ bgcolor: "#efebe9" }}>
@@ -60,7 +58,7 @@ const ItemList = () => {
                         </Typography>
                         <Typography sx={{ textTransform: "capitalize", fontSize: "14px" }}>{allDetails?.shopName}</Typography>
                         <Typography sx={{ textTransform: "capitalize", fontSize: "11px", textTransform: "uppercase", color: "gray" }}>{allDetails?.address}</Typography>
-                        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                        {/* <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                             <Typography sx={{ textTransform: "capitalize", fontSize: "14px", display: "flex", alignItems: "center" }}><WatchLaterIcon sx={{ fontSize: "16px", mr: "3px" }} />{allDetails?.deliveryTime} | 9313.54 km away</Typography>
                             <Box>
                                 <IconButton sx={{ bgcolor: "#8bc34a", p: "3px", mr: "10px" }}>
@@ -70,7 +68,7 @@ const ItemList = () => {
                                     <PlaceIcon sx={{ color: "white", fontSize: "16px" }} />
                                 </IconButton>
                             </Box>
-                        </Box>
+                        </Box> */}
                     </Paper>
                 </Grid>
 
