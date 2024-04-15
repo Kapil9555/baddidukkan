@@ -22,7 +22,7 @@ const ItemList = () => {
 
     const getItems = async()=>{
         try{
-    console.log("categories",mid)
+    // console.log("categories",mid)
             const resp =  await axios.get(`${BASE_URL}api/pre-order/pro/${mid}`)
             if (resp.data.message === "success") {
                 setAllDetails(resp?.data?.response)
@@ -82,7 +82,7 @@ const ItemList = () => {
                             categories != null
                             ?
                                 categories?.map((ele, i) => (
-                                    <Box key={i} sx={{ display: "flex", mr: "15px", flexDirection: "column", alignItems: "center", justifyContent: "center" }} onClick={()=>{handleSelectCatItems(ele)}}>
+                                    <Box key={i} sx={{ display: "flex",cursor:"pointer", mr: "15px", flexDirection: "column", alignItems: "center", justifyContent: "center" }} onClick={()=>{handleSelectCatItems(ele)}}>
                                         <Box sx={{ height: "50px",backgroundImage:`url(${BASE_URL+ele.catImage})`, overflow: "hidden", width: "50px", borderRadius: "50px" }}>
                                             {/* <Image src={burger} alt='burger' style={{ height: "50px", position: "absolute", width: "auto" }} /> */}
                                         </Box>
