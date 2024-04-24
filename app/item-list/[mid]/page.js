@@ -1,5 +1,5 @@
 'use client'
-import { Badge, Box, Container, Grid, IconButton, Paper, Typography } from '@mui/material'
+import { Badge, Box, Container, Grid, IconButton, Paper, Skeleton, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import WifiCalling3Icon from '@mui/icons-material/WifiCalling3';
@@ -47,17 +47,17 @@ const ItemList = () => {
         getItems()
     },[])
 
-    console.log("categories",mid)
+    console.log("categories",catItems)
     return (
         <Container disableGutters maxWidth={'xl'}>
             <Grid container sx={{ bgcolor: "#efebe9" }}>
                 <Grid item xs={12} sx={{}}>
                     <Paper sx={{ p: "20px" }}>
                         <Typography variant='h6' sx={{ textTransform: "capitalize", fontWeight: 600 }}>
-                           {allDetails?.ownerName}
+                           {allDetails?.ownerName ?? <Skeleton variant='text' sx={{width:"100px",fontSize:"22px"}}/>}
                         </Typography>
-                        <Typography sx={{ textTransform: "capitalize", fontSize: "14px" }}>{allDetails?.shopName}</Typography>
-                        <Typography sx={{ textTransform: "capitalize", fontSize: "11px", textTransform: "uppercase", color: "gray" }}>{allDetails?.address}</Typography>
+                        <Typography sx={{ textTransform: "capitalize", fontSize: "14px" }}>{allDetails?.shopName ?? <Skeleton variant='text' sx={{width:"100px",fontSize:"17px"}}/>}</Typography>
+                        <Typography sx={{ textTransform: "capitalize", fontSize: "11px", textTransform: "uppercase", color: "gray" }}>{allDetails?.address ?? <Skeleton variant='text' sx={{width:"200px",fontSize:"17px"}}/>}</Typography>
                         {/* <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                             <Typography sx={{ textTransform: "capitalize", fontSize: "14px", display: "flex", alignItems: "center" }}><WatchLaterIcon sx={{ fontSize: "16px", mr: "3px" }} />{allDetails?.deliveryTime} | 9313.54 km away</Typography>
                             <Box>
@@ -92,7 +92,17 @@ const ItemList = () => {
                                     </Box>
                                 ))
                                 :
-                                ""
+                                new Array(6).fill(1).map((ele,i)=>(
+                                    <Box key={i} sx={{ display: "flex",cursor:"pointer", mr: "15px", flexDirection: "column", alignItems: "center", justifyContent: "center" }} onClick={()=>{handleSelectCatItems(ele)}}>
+                                        <Box sx={{ height: "50px",overflow: "hidden", width: "50px", borderRadius: "50px" }}>
+                                            <Skeleton variant='circular' sx={{height:"100%",width:"100%"}}/>
+                                        </Box>
+                                        <Box sx={{width: "fit-content", p: "3px 10px", mt: "5px", borderRadius: "25px" }}>
+                                           <Skeleton variant='text' sx={{width:"70px",height:"100%"}}/>
+                                        </Box>
+                                    </Box>
+                                    )
+                                )
                         }
                             
                             
@@ -105,6 +115,8 @@ const ItemList = () => {
                     </Paper>
                 </Grid>
                 {
+                    categories != null 
+                    ?
                     catItems?.map((ele, i) => (
                         <Grid item xs={12} key={i}>
                             <Paper sx={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #8bc34a", boxSizing: "border-box", width: "100%", p: "15px 30px 20px 10px" }}>
@@ -137,6 +149,35 @@ const ItemList = () => {
                                         <Box sx={{ width: "22px", display: "flex", justifyContent: "center", alignItems: "center" }}>
                                             <AddIcon sx={{ color: "#8bc34a", fontSize: "20px" }} />
                                         </Box>
+                                    </Box>
+                                </Box>
+                            </Paper>
+                        </Grid>
+                    ))
+                    :
+                    new Array(7).fill(1).map((ele, i) => (
+                        <Grid item xs={12} key={i}>
+                            <Paper sx={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #8bc34a", boxSizing: "border-box", width: "100%", p: "15px 30px 20px 10px" }}>
+
+                                <Box sx={{ display: "flex" }}>
+                                    <Box sx={{ height: "80px", width: "80px", borderRadius: "10px", overflow: "hidden" }}>
+                                        <Skeleton variant='rectangular' sx={{height:"100%",width:"100%"}}/>
+                                    </Box>
+                                    <Box sx={{ ml: "10px" }}>
+                                    <Skeleton variant='text' sx={{width:"100px",fontSize:"20px"}}/>
+                                    <Skeleton variant='text' sx={{width:"100px",fontSize:"17px"}}/>
+                                    <Skeleton variant='text' sx={{width:"100px",fontSize:"17px"}}/>
+
+                                    </Box>
+                                </Box>
+
+                                <Box sx={{ height: "80px", display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center", width: "fit-content" }}>
+                                    <Box>
+                                    <Skeleton variant='circular' sx={{width:"30px",height:"30px"}}/>
+                                       
+                                    </Box>
+                                    <Box sx={{display: "flex" }}>
+                                          <Skeleton variant='text' sx={{width:"100px",fontSize:"35px"}}/>
                                     </Box>
                                 </Box>
                             </Paper>
