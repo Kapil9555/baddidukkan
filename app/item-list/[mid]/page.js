@@ -9,6 +9,7 @@ import StopCircleOutlinedIcon from '@mui/icons-material/StopCircleOutlined'
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import StarIcon from '@mui/icons-material/Star';
 import { useParams, useRouter } from 'next/navigation';
 import { BASE_URL } from '@/constant';
 import axios from 'axios';
@@ -47,7 +48,7 @@ const ItemList = () => {
         getItems()
     },[])
 
-    console.log("categories",catItems)
+    console.log("categories",categories)
     return (
         <Container disableGutters maxWidth={'xl'}>
             <Grid container sx={{ bgcolor: "#efebe9" }}>
@@ -78,6 +79,7 @@ const ItemList = () => {
                             <Typography align='center' sx={{ display: "flex", alignItems: "center", fontSize: "14px" }}><MenuBookIcon sx={{ fontSize: "40px", color: "black", mr: "5px", mt: "-3px" }} /> Menu</Typography>
                         </Box>
                         <Box sx={{ display: "flex", overflow: "auto", mt: "20px" }}>
+                      
                         {
                             categories != null
                             ?
@@ -117,6 +119,7 @@ const ItemList = () => {
                 {
                     categories != null 
                     ?
+                    catItems.length !=0 ?
                     catItems?.map((ele, i) => (
                         <Grid item xs={12} key={i}>
                             <Paper sx={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #8bc34a", boxSizing: "border-box", width: "100%", p: "15px 30px 20px 10px" }}>
@@ -130,8 +133,23 @@ const ItemList = () => {
                                     </Box>
                                     <Box sx={{ ml: "10px" }}>
                                         <Typography sx={{ fontSize: "14px" }}>{ele.itemName}</Typography>
-                                        <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}>Category : Rasmalai</Typography>
-                                        <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}><span style={{ color: "#8bc34a", marginRight: "10px" }}>₹20</span> ₹<span style={{ textDecoration: "line-through" }}>30</span></Typography>
+                                        {/* <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}>Category : Rasmalai</Typography> */}
+                                        <Box sx={{display:"flex",justifyContent:"flex-start",alignItems:"center"}}>
+                                        <Box sx={{mr:"10px"}}>
+                                        {
+                                         ele.sizeList.map((item)=>{
+                                            return <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}><span style={{ color: "#8bc34a", marginRight: "10px" }}>{item?.itemSize}</span>₹<span style={{ }}>{item?.srp}</span></Typography>
+                                            {/* return <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}><span style={{ color: "#8bc34a", marginRight: "10px" }}>{item?.itemSize}</span><span style={{ color: "#8bc34a", marginRight: "10px" }}>{item?.srp}</span> ₹<span style={{ textDecoration: "line-through" }}>{item?.srp}</span></Typography> */}
+                                         })
+                                        }
+                                        </Box>
+                                        <Box>
+                                        <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}><StarIcon sx={{color:"#8bc34a",fontSize:"14px"}}/>{" "}{ele?.rating}</Typography>
+                                        </Box>
+                                        </Box>
+                                        
+                                        <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}>{ele?.longDescription}</Typography>
+
                                     </Box>
                                 </Box>
 
@@ -154,6 +172,10 @@ const ItemList = () => {
                             </Paper>
                         </Grid>
                     ))
+                    :
+                    <Box sx={{height:"60vh",display:"flex",justifyContent:"center",alignItems:"center",width:"100%"}}>
+                        <Typography align='center' sx={{ mt: "2px",fontSize: "20px",fontWeight:"bold", color: "gray" }}>No Records Found!</Typography>
+                    </Box>
                     :
                     new Array(7).fill(1).map((ele, i) => (
                         <Grid item xs={12} key={i}>
@@ -183,6 +205,8 @@ const ItemList = () => {
                             </Paper>
                         </Grid>
                     ))
+                   
+
                 }
             </Grid>
             <Paper sx={{ position: "fixed", border: "1px solid #e0e0e0", overflow: "hidden", cursor: "pointer", p: "5px", height: "50px", borderRadius: "50px", width: "50px", bottom: "20px", right: "20px" }} onClick={() => { router.push('/cart-page') }}>
