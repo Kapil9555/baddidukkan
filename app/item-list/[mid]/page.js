@@ -13,6 +13,7 @@ import StarIcon from '@mui/icons-material/Star';
 import { useParams, useRouter } from 'next/navigation';
 import { BASE_URL } from '@/constant';
 import axios from 'axios';
+import AddToCart from '@/components/modals/AddToCart';
 
 const ItemList = () => {
     const router = useRouter()
@@ -20,6 +21,7 @@ const ItemList = () => {
     const [allDetails , setAllDetails] = useState(null)
     const [categories , setCategories] = useState(null)
     const [catItems , setCatItems] = useState(null)
+    const [addItem , setAddItem] = useState({open:false,data:{}})
 
     const getItems = async()=>{
         try{
@@ -44,11 +46,16 @@ const ItemList = () => {
         setCatItems(data.items)
     }
 
+    const addToCartHandler =(ele)=>{
+        console.log("ele",ele)
+        setAddItem({...addItem,open:true,data:ele})
+    }
+
     useEffect(()=>{
         getItems()
     },[])
 
-    console.log("categories",categories)
+    console.log("categories",catItems)
     return (
         <Container disableGutters maxWidth={'xl'}>
             <Grid container sx={{ bgcolor: "#efebe9" }}>
@@ -136,18 +143,17 @@ const ItemList = () => {
                                         {/* <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}>Category : Rasmalai</Typography> */}
                                         <Box sx={{display:"flex",justifyContent:"flex-start",alignItems:"center"}}>
                                         <Box sx={{mr:"10px"}}>
-                                        {
-                                         ele.sizeList.map((item)=>{
-                                            return <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}><span style={{ color: "#8bc34a", marginRight: "10px" }}>{item?.itemSize}</span>₹<span style={{ }}>{item?.srp}</span></Typography>
+                                    
+                                            
+                                            <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}>₹{Math.min(...ele.sizeList.map((item)=>(item.srp)))}</Typography>
                                             {/* return <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}><span style={{ color: "#8bc34a", marginRight: "10px" }}>{item?.itemSize}</span><span style={{ color: "#8bc34a", marginRight: "10px" }}>{item?.srp}</span> ₹<span style={{ textDecoration: "line-through" }}>{item?.srp}</span></Typography> */}
-                                         })
-                                        }
-                                        </Box>
-                                        <Box>
-                                        <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}><StarIcon sx={{color:"#8bc34a",fontSize:"14px"}}/>{" "}{ele?.rating}</Typography>
-                                        </Box>
-                                        </Box>
+                                         
                                         
+                                        </Box>
+                                         <Box>
+                                          <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}><StarIcon sx={{color:"#8bc34a",fontSize:"14px"}}/>{" "}{ele?.rating}</Typography>
+                                         </Box>
+                                        </Box>
                                         <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}>{ele?.longDescription}</Typography>
 
                                     </Box>
@@ -157,16 +163,9 @@ const ItemList = () => {
                                     <Box>
                                         <StopCircleOutlinedIcon sx={{ color:ele.foodType == "Veg" ? "#8bc34a":"#b71c1c" }} />
                                     </Box>
-                                    <Box sx={{ border: "1px solid #8bc34a", display: "flex" }}>
-                                        <Box sx={{ width: "22px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                            <DeleteIcon sx={{ color: "#8bc34a", fontSize: "20px" }} />
-                                        </Box>
-                                        <Box sx={{ bgcolor: "#8bc34a", width: "22px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                            <Typography align='center' sx={{ color: "white", fontSize: "14px" }}>1</Typography>
-                                        </Box>
-                                        <Box sx={{ width: "22px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                            <AddIcon sx={{ color: "#8bc34a", fontSize: "20px" }} />
-                                        </Box>
+                                    <Box sx={{bgcolor: "#8bc34a",border:"1px solid #689f38",borderRadius:"25px",p:"2px 10px",userSelect:"none",cursor:"pointer"}} onClick={()=>{addToCartHandler(ele)}}>
+                                     <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "15px",color:"white" }}>Add To Cart</Typography>
+
                                     </Box>
                                 </Box>
                             </Paper>
@@ -205,8 +204,6 @@ const ItemList = () => {
                             </Paper>
                         </Grid>
                     ))
-                   
-
                 }
             </Grid>
             <Paper sx={{ position: "fixed", border: "1px solid #e0e0e0", overflow: "hidden", cursor: "pointer", p: "5px", height: "50px", borderRadius: "50px", width: "50px", bottom: "20px", right: "20px" }} onClick={() => { router.push('/cart-page') }}>
@@ -216,6 +213,7 @@ const ItemList = () => {
                     </Badge>
                 </Box>
             </Paper>
+            <AddToCart addItem={addItem}  setAddItem={setAddItem}/>
         </Container>
     )
 }
