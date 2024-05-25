@@ -14,7 +14,6 @@ import { useParams, useRouter } from 'next/navigation';
 import { BASE_URL } from '@/constant';
 import axios from 'axios';
 import AddToCart from '@/components/modals/AddToCart';
-import "../../../components/style.css"
 
 const ItemList = () => {
     const router = useRouter()
@@ -59,15 +58,14 @@ const ItemList = () => {
     console.log("categories",catItems)
     return (
         <Container disableGutters maxWidth={'xl'}>
-            <Grid container sx={{ bgcolor: "black" }}>
+            <Grid container sx={{ bgcolor: "#efebe9" }}>
                 <Grid item xs={12} sx={{}}>
-                    <Paper sx={{ p: "20px",bgcolor:"black",borderBottom:"1px solid #8bc34a" }}>
-                        <Typography variant='h6' sx={{ textTransform: "capitalize",color:"#8bc34a", fontWeight: 600 }}>
+                    <Paper sx={{ p: "20px" }}>
+                        <Typography variant='h6' sx={{ textTransform: "capitalize", fontWeight: 600 }}>
                            {allDetails?.ownerName ?? <Skeleton variant='text' sx={{width:"100px",fontSize:"22px"}}/>}
                         </Typography>
-                        <Typography sx={{ textTransform: "capitalize", fontSize: "14px",color:"white" }}>{allDetails?.shopName ?? <Skeleton variant='text' sx={{width:"100px",fontSize:"17px"}}/>}</Typography>
-                        <Typography sx={{ textTransform: "capitalize", fontSize: "11px", textTransform: "uppercase", color: "white" }}>{allDetails?.address ?? <Skeleton variant='text' sx={{width:"200px",fontSize:"17px"}}/>}</Typography>
-                        
+                        <Typography sx={{ textTransform: "capitalize", fontSize: "14px" }}>{allDetails?.shopName ?? <Skeleton variant='text' sx={{width:"100px",fontSize:"17px"}}/>}</Typography>
+                        <Typography sx={{ textTransform: "capitalize", fontSize: "11px", textTransform: "uppercase", color: "gray" }}>{allDetails?.address ?? <Skeleton variant='text' sx={{width:"200px",fontSize:"17px"}}/>}</Typography>
                         {/* <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                             <Typography sx={{ textTransform: "capitalize", fontSize: "14px", display: "flex", alignItems: "center" }}><WatchLaterIcon sx={{ fontSize: "16px", mr: "3px" }} />{allDetails?.deliveryTime} | 9313.54 km away</Typography>
                             <Box>
@@ -79,27 +77,26 @@ const ItemList = () => {
                                 </IconButton>
                             </Box>
                         </Box> */}
-
                     </Paper>
                 </Grid>
 
-                <Grid item xs={12} sx={{}}>
-                    <Paper sx={{ p: "20px",bgcolor:"black" }}>
+                <Grid item xs={12} sx={{ mt: "10px" }}>
+                    <Paper sx={{ p: "20px" }}>
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
-                            <Typography align='center' sx={{ display: "flex", alignItems: "center", fontSize: "14px",color:"#8bc34a" }}><MenuBookIcon sx={{ fontSize: "40px", color: "#8bc34a", mr: "5px", mt: "-3px" }} /> Menu</Typography>
+                            <Typography align='center' sx={{ display: "flex", alignItems: "center", fontSize: "14px" }}><MenuBookIcon sx={{ fontSize: "40px", color: "black", mr: "5px", mt: "-3px" }} /> Menu</Typography>
                         </Box>
-                        <Box  sx={{ display: "flex", overflow: "auto", mt: "20px" }}>
+                        <Box sx={{ display: "flex", overflow: "auto", mt: "20px" }}>
                       
                         {
                             categories != null
                             ?
                                 categories?.map((ele, i) => (
                                     <Box key={i} sx={{ display: "flex",cursor:"pointer", mr: "15px", flexDirection: "column", alignItems: "center", justifyContent: "center" }} onClick={()=>{handleSelectCatItems(ele)}}>
-                                        <Box sx={{ height: "50px",backgroundImage:`url(${BASE_URL+ele.catImage})`,border:"1px solid #8bc34a", overflow: "hidden", width: "50px", borderRadius: "50px" }}>
+                                        <Box sx={{ height: "50px",backgroundImage:`url(${BASE_URL+ele.catImage})`, overflow: "hidden", width: "50px", borderRadius: "50px" }}>
                                             {/* <Image src={burger} alt='burger' style={{ height: "50px", position: "absolute", width: "auto" }} /> */}
                                         </Box>
                                         <Box sx={{ border: "1px solid #8bc34a", width: "fit-content", p: "3px 10px", mt: "5px", borderRadius: "25px" }}>
-                                            <Typography sx={{ textTransform: "capitalize",whiteSpace:"nowrap", fontSize: "13px",color:"white" }}>{ele.catName}</Typography>
+                                            <Typography sx={{ textTransform: "capitalize",whiteSpace:"nowrap", fontSize: "13px" }}>{ele.catName}</Typography>
                                         </Box>
                                     </Box>
                                 ))
@@ -121,7 +118,7 @@ const ItemList = () => {
                         </Box>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} sx={{ }}>
+                <Grid item xs={12} sx={{ mt: "10px" }}>
                     <Paper sx={{ bgcolor: "#8bc34a", p: "10px 0px" }}>
                         <Typography align='center' sx={{ fontWeight: 600, fontSize: "16px", color: "white" }}>Popular Item</Typography>
                     </Paper>
@@ -131,33 +128,33 @@ const ItemList = () => {
                     ?
                     catItems.length !=0 ?
                     catItems?.map((ele, i) => (
-                        <Grid item xs={12} key={i} sx={{bgcolor:"black"}}>
-                            <Paper sx={{ display: "flex",bgcolor:"black", justifyContent: "space-between", borderBottom: "1px solid #8bc34a", boxSizing: "border-box", width: "100%", p: "15px 30px 20px 10px" }}>
+                        <Grid item xs={12} key={i}>
+                            <Paper sx={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid #8bc34a", boxSizing: "border-box", width: "100%", p: "15px 30px 20px 10px" }}>
 
                                 <Box sx={{ display: "flex" }}>
-                                    <Box sx={{ height: "80px",backgroundImage:`url(${BASE_URL}${ele.itemImage})`,border:"1px solid #8bc34a",backgroundRepeat:"no-repeat",backgroundSize:"100% 100%", position: "relative", width: "80px", borderRadius: "10px", overflow: "hidden" }}>
+                                    <Box sx={{ height: "80px",backgroundImage:`url(${BASE_URL}${ele.itemImage})`,backgroundRepeat:"no-repeat",backgroundSize:"100% 100%", position: "relative", width: "80px", borderRadius: "10px", overflow: "hidden" }}>
                                         <Box sx={{ position: "absolute", top: "0px", left: "0px", zIndex: 9, height: "17px", bgcolor: "#8bc34a", width: "60px" }}>
                                             <Typography align='center' sx={{ color: "white", fontSize: "10px", mt: "1px", fontWeight: 800 }}>33 %OFF</Typography>
                                         </Box>
                                         {/* <Image src={dhosa} alt='burger' style={{ position: "absolute", width: "100%", height: "100%" }} /> */}
                                     </Box>
                                     <Box sx={{ ml: "10px" }}>
-                                        <Typography sx={{ fontSize: "14px",color:"#8bc34a" }}>{ele.itemName}</Typography>
+                                        <Typography sx={{ fontSize: "14px" }}>{ele.itemName}</Typography>
                                         {/* <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}>Category : Rasmalai</Typography> */}
                                         <Box sx={{display:"flex",justifyContent:"flex-start",alignItems:"center"}}>
                                         <Box sx={{mr:"10px"}}>
                                     
                                             
-                                            <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "white" }}>₹{Math.min(...ele.sizeList.map((item)=>(item.srp)))}</Typography>
+                                            <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}>₹{Math.min(...ele.sizeList.map((item)=>(item.srp)))}</Typography>
                                             {/* return <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}><span style={{ color: "#8bc34a", marginRight: "10px" }}>{item?.itemSize}</span><span style={{ color: "#8bc34a", marginRight: "10px" }}>{item?.srp}</span> ₹<span style={{ textDecoration: "line-through" }}>{item?.srp}</span></Typography> */}
                                          
                                         
                                         </Box>
                                          <Box>
-                                          <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "white" }}><StarIcon sx={{color:"#8bc34a",fontSize:"14px"}}/>{" "}{ele?.rating}</Typography>
+                                          <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}><StarIcon sx={{color:"#8bc34a",fontSize:"14px"}}/>{" "}{ele?.rating}</Typography>
                                          </Box>
                                         </Box>
-                                        <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "white" }}>{ele?.longDescription}</Typography>
+                                        <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "gray" }}>{ele?.longDescription}</Typography>
 
                                     </Box>
                                 </Box>
