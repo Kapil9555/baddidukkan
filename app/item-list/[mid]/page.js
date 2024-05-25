@@ -157,7 +157,8 @@ const ItemList = () => {
                                           <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "white" }}><StarIcon sx={{color:"#8bc34a",fontSize:"14px"}}/>{" "}{ele?.rating}</Typography>
                                          </Box>
                                         </Box>
-                                        <Typography align='center' sx={{ display: "flex", mt: "2px", alignItems: "center", fontSize: "12px", color: "white" }}>{ele?.longDescription}</Typography>
+                                        <Typography align='center' sx={{ display:{lg:"none",md:"flex",sm:"flex",xs:"flex"}, mt: "2px", alignItems: "center", fontSize: "12px", color: "white" }}>{ele?.longDescription?.length > 20 ? ele?.longDescription.slice(0,20)+"..." : ele?.longDescription}</Typography>
+                                        <Typography align='center' sx={{ display:{lg:"flex",md:"none",sm:"none",xs:"none"}, mt: "2px", alignItems: "center", fontSize: "12px", color: "white" }}>{ele?.longDescription}</Typography>
 
                                     </Box>
                                 </Box>
