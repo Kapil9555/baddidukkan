@@ -13,18 +13,18 @@ const Login = () => {
 
     return (
         <Container maxWidth={'xl'} disableGutters>
-            <Grid container justifyContent={'center'} alignItems={'center'} sx={{ height: "90vh" }}>
-                <Grid item xs={12} sm={8} md={6} lg={4} sx={{bgcolor:"black",borderRadius:"12px"}}>
-                    <Box>
+            <Grid container justifyContent={'center'} alignItems={'center'} sx={{ height: "100vh",bgcolor:"black",p:"0px 10px" }}>
+                <Grid item xs={12} sm={8} md={6} lg={4} sx={{bgcolor:"black",borderRadius:"12px",border:"4px solid #8bc34a"}}>
+                    <Box sx={{borderBottom:"4px solid #8bc34a"}}>
                         <Typography align='center' sx={{ fontSize: '2rem', color: "#8bc34a", fontWeight: "600" }}>Sign In</Typography>
                         <Typography align='center' sx={{color: "#8bc34a", fontSize: { lg: "13px", md: "14px", sm: "13px", xs: "12px" } }}>Welcome Back Dear</Typography>
-                        <Box sx={{ p: 1.5, borderBottom: "1px solid #dee2e6" }}>
+                        <Box sx={{ p: 1.5}}>
                             <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", }}>
                                 <LockOpenOutlinedIcon sx={{ fontSize: "2.2rem", color: "white" }} />
                             </Box>
                         </Box>
                     </Box>
-                    <Paper sx={{ bgcolor: "#000000" }}>
+                    <Paper sx={{ bgcolor: "#000000",borderRadius:"15px" }}>
                         <Grid container sx={{ p: 2, pt: 1.5 }}>
                             <Grid item xs={12} sx={{ mt: "10px", pr: "7px" }}>
                                 <Typography sx={{ fontSize: "14px", color: "#ffffff" }}>Mobile</Typography>
