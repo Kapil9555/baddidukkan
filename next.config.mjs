@@ -1,19 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-    images:{
-        domains:["badidukkan.in"]
-    }
-};
+const nextConfig = {};
 
 export default nextConfig;
-
-// /** @type {import('next').NextConfig} */
-
-// const nextConfig = {
-//     distDir: 'build',
-//     images:{
-//         domains:["badidukkan.in"]
-//     }
-// }
-
-// module.exports = nextConfig
