@@ -8,7 +8,7 @@ const page = () => {
     return (
         <Container disableGutters>
             <Grid container justifyContent={'center'} sx={{ p: "10px" }}>
-                <Grid item lg={6} md={6} sm={10} xs={12} sx={{ border: "4px solid #8bc34a", pb: "10px", minHeight: "95vh" }}>
+                <Grid item lg={6} md={6} sm={10} xs={12} sx={{ border:{lg:"4px solid #8bc34a",md:"4px solid #8bc34a",sm:"none",xs:"none"}, pb: "10px", minHeight: "95vh" }}>
                     <Grid container sx={{ cursor: "pointer" }}>
                         <Grid item xs={12} sx={{ p: "10px 20px", display: "flex", alignItems: "center" }}>
                             <Box sx={{ mr: "20px" }}>

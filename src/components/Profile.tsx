@@ -14,7 +14,7 @@ const Profile = () => {
             <Container maxWidth={'xl'} disableGutters>
 
                 <Grid container justifyContent={'center'} sx={{ p: "10px" }}>
-                    <Grid item lg={6} md={6} sm={10} xs={12} sx={{ border:"4px solid #8bc34a",pb:"10px",minHeight:"95vh"}}>
+                    <Grid item lg={6} md={6} sm={10} xs={12} sx={{ border:{lg:"4px solid #8bc34a",md:"4px solid #8bc34a",sm:"none",xs:"none"},pb:"10px",minHeight:"95vh"}}>
                         <Grid container sx={{ mt: "40px",cursor:"pointer" }}>
                             <Grid item xs={12} sx={{borderBottom:"4px solid #8bc34a",minHeight:"100%"}}>
                                 <Box sx={{}}>
